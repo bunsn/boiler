@@ -90,7 +90,7 @@ To develop your own statement definition follow these steps:
    __boiler__.testStatementDefinition(definition)
    ```
 
-   If successful, you should see a brief summary of the statement’s transactions. Otherwise you’ll get an error. (At this early stage, the error message probably, won’t be too helpful!)
+   If successful, you should see a brief summary of the statement’s transactions. Otherwise you’ll get an error. (At this early stage, the error message probably won’t be too helpful!)
 
    Note: this script does not store or send your transactions elsewhere. It is deliberately limited in functionality to discourage its use in production.
 
