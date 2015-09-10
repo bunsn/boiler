@@ -24,5 +24,28 @@
       "describe",
       "it"
     ]
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "browserify": "^11.0.1",
+    "uglify-js": "^2.4.24",
+    "mochify": "^2.10.1",
+    "standard": "^5.2.1",
+    "watchify": "^3.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bunsn/boiler.git"
+  },
+  "keywords": [
+    "fintech",
+    "scraper",
+    "banking"
+  ],
+  "bugs": {
+    "url": "https://github.com/bunsn/boiler/issues"
+  },
+  "homepage": "https://github.com/bunsn/boiler#readme"
 }
