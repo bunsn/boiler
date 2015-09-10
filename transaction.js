@@ -4,9 +4,7 @@ var TransactionDate = require('./transaction-date')
 
 /**
  * @constructor
- * @param {Array} data - An array of attribute values
- * @param {Array} columns - An array of attribute keys in the order they appear in `data`
- * @param {Object} options
+ * @param {Object} attributes
  */
 
 function Transaction (attributes) {
