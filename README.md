@@ -1,5 +1,3 @@
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
 # Boiler
 
 Boiler aims to simplify the task of scraping financial data from banking websites. It is currently experimental, prerelease software, to test if it’s possible to support many financial institutions through crowd-sourced statement definitions.
@@ -142,3 +140,7 @@ Boiler makes extensive use of ES5 array methods, and so you’ll require a reaso
 ## License
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (ISC).
+
+***
+
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
