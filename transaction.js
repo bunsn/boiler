@@ -3,6 +3,9 @@ var makeAbsoluteNumber = require('./lib/number/make-absolute-number')
 var TransactionDate = require('./transaction-date')
 
 /**
+ * Represents a single transaction.
+ * Getters and setters are used to transform and format values. Also responsible
+ * for calculating amounts and dates when missing or invalid.
  * @constructor
  * @param {Object} attributes
  */
@@ -10,7 +13,9 @@ var TransactionDate = require('./transaction-date')
 function Transaction (attributes) {
   this.attributes = {}
 
-  for (var key in attributes) this.set(key, attributes[key])
+  for (var key in attributes) {
+    if (attributes.hasOwnProperty(key)) this.set(key, attributes[key])
+  }
 
   if (!this.get('date')) this.setDate()
   if (!this.get('amount')) this.setAmount()
@@ -36,22 +41,18 @@ Transaction.prototype.formatters = {
 }
 
 /**
- * Default output columns
- */
-
-Transaction.prototype.output = ['date', 'amount', 'description']
-
-/**
  * Transforms and sets the given attribute
+ * @param {String} key - The name of the attribute
+ * @param value - The value of the attribute
  */
 
 Transaction.prototype.set = function (key, value) {
-  var transformer = this.transformers[key] || function (v) { return v }
+  var transformer = this.transformers[key] || idFunction
   this.attributes[key] = transformer(value)
 }
 
 /**
- * Returns the stored attribute
+ * @returns the stored attribute
  */
 
 Transaction.prototype.get = function (key) {
@@ -59,31 +60,41 @@ Transaction.prototype.get = function (key) {
 }
 
 /**
- * Returns the formatted attribute
+ * Get a value formatted by the corresponding formatter
+ * @param key - The key of the value to return
+ * @returns The formatted attribute
  */
 
 Transaction.prototype.getFormatted = function (key) {
-  var value = this.get(key)
-
-  var formatter = this.formatters[key]
-  if (typeof formatter === 'function') value = formatter(value)
-
-  return value
+  var formatter = this.formatters[key] || idFunction
+  return formatter(this.get(key))
 }
 
-Transaction.prototype.isValid = function () {
-  return this.toArray().every(function (i) { return Boolean(i) })
+/**
+ * Returns an array representation of the given keys or all formatted
+ * attributes.
+ * @param {Array} keys - An array of attribute keys
+ * @returns {Array} - An array of formatted attributes
+ */
+
+Transaction.prototype.toArray = function (keys) {
+  keys = keys || Object.keys(this.attributes)
+  return keys.map(this.getFormatted.bind(this))
 }
 
-Transaction.prototype.toArray = function () {
-  return this.output.map(this.getFormatted.bind(this))
-}
+/**
+ * Returns an object of formatted values of the given keys or all formatted
+ * attributes.
+ * @param {Array} keys - An array of attribute keys
+ * @returns {Array} - An array of formatted attributes
+ */
 
-Transaction.prototype.toJSON = function () {
+Transaction.prototype.toJSON = function (keys) {
+  keys = keys || Object.keys(this.attributes)
   var object = {}
 
-  for (var i = this.output.length - 1; i >= 0; i--) {
-    var key = this.output[i]
+  for (var i = keys.length - 1; i >= 0; i--) {
+    var key = keys[i]
     object[key] = this.getFormatted(key)
   }
 
@@ -125,5 +136,7 @@ function formatDate (value) {
     return String('00' + number).slice(-2)
   }
 }
+
+function idFunction (x) { return x }
 
 module.exports = Transaction

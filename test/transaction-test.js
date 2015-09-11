@@ -11,6 +11,8 @@ var attributes = {
 }
 
 var transaction
+var actual
+var formattedValue
 
 describe('Transaction', function () {
   beforeEach(function () {
@@ -51,20 +53,38 @@ describe('Transaction', function () {
     })
   })
 
-  describe('#isValid', function () {
-    beforeEach(function () {
-      attributes = { date: new Date(), amount: '5', description: 'Foo' }
+  describe('#toArray', function () {
+    it('returns an array of all the attributes (formatted)', function () {
+      actual = transaction.toArray()
+
+      for (var key in attributes) {
+        if (attributes.hasOwnProperty(key)) {
+          formattedValue = transaction.getFormatted(key)
+          assert(actual.indexOf(formattedValue) >= 0)
+        }
+      }
     })
 
-    it('returns true when output values are present', function () {
-      transaction = new Transaction(attributes)
-      assert(transaction.isValid())
+    it('returns just the requested attributes', function () {
+      formattedValue = transaction.getFormatted('date')
+      assert.deepEqual(transaction.toArray(['date']), [formattedValue])
+    })
+  })
+
+  describe('#toJSON', function () {
+    it('returns an object of all the attributes (formatted)', function () {
+      actual = transaction.toJSON()
+
+      for (var key in attributes) {
+        if (attributes.hasOwnProperty(key)) {
+          assert.equal(actual[key], transaction.getFormatted(key))
+        }
+      }
     })
 
-    it('returns false when not all output values are present', function () {
-      attributes.description = ''
-      transaction = new Transaction(attributes)
-      assert(!transaction.isValid())
+    it('returns just the requested attributes', function () {
+      formattedValue = transaction.getFormatted('date')
+      assert.deepEqual(transaction.toJSON(['date']), { date: formattedValue })
     })
   })
 })
