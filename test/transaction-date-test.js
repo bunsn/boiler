@@ -1,46 +1,94 @@
 var assert = require('assert')
-var parseDate = require('../lib/parse-date')
-var actual
-var expected
+var sinon = require('sinon')
+var stub = sinon.stub
 
-describe('parseDate', function () {
+var TransactionDate = require('../transaction-date')
+var transactionDate
+
+describe('TransactionDate', function () {
   beforeEach(function () {
-    expected = { year: 2015, month: 3, date: 1 }
+    transactionDate = new TransactionDate('1 Apr 2015', 'D MMM YYYY')
   })
 
-  it('parses a date with UK-style formatting', function () {
-    actual = parseDate('01/04/2015', 'DD/MM/YYYY')
-    assert.deepEqual(actual, expected)
+  describe('#constructor', function () {
+    it('parses the date', function () {
+      assert.equal(transactionDate.year, 2015)
+      assert.equal(transactionDate.month, 3)
+      assert.equal(transactionDate.date, 1)
+    })
+
+    context('when no year present', function () {
+      var calculateYearStub
+      var year = 2015
+      var succeedingDate = new Date(2015, 3, 2)
+
+      beforeEach(function () {
+        calculateYearStub = stub(TransactionDate.prototype, 'calculateYear').returns(year)
+
+        transactionDate = new TransactionDate('1 Apr', 'D MMM', {
+          succeedingDate: succeedingDate
+        })
+      })
+
+      afterEach(function () {
+        calculateYearStub.restore()
+      })
+
+      it('calculates the year when no year present', function () {
+        assert(calculateYearStub.calledWith(succeedingDate))
+      })
+
+      it('sets the year', function () {
+        assert.equal(transactionDate.year, year)
+      })
+    })
   })
 
-  it('parses a date with US-style formatting', function () {
-    actual = parseDate('04/01/2015', 'MM/DD/YYYY')
-    assert.deepEqual(actual, expected)
+  describe('#toDate', function () {
+    it('returns null if an invalid date', function () {
+      transactionDate.year = void 0
+      assert.equal(transactionDate.toDate(), null)
+    })
+
+    it('returns a native date object', function () {
+      var expected = new Date(
+        transactionDate.year,
+        transactionDate.month,
+        transactionDate.date
+      )
+      assert.deepEqual(transactionDate.toDate(), expected)
+    })
   })
 
-  it('parses a date with month names', function () {
-    actual = parseDate('1 Apr 2015', 'D MMM YYYY')
-    assert.deepEqual(actual, expected)
-  })
+  describe('#calculateYear', function () {
+    beforeEach(function () {
+      transactionDate = new TransactionDate('2 Jul', 'D MMM')
+    })
 
-  it('parses a date with full month names', function () {
-    actual = parseDate('1 April 2015', 'D MMMM YYYY')
-    assert.deepEqual(actual, expected)
-  })
+    context('when succeeding date is not Jan and the date is not Dec', function () {
+      it('returns the succeeding date’s year', function () {
+        assert.equal(transactionDate.calculateYear(new Date(2015, 8, 2)), 2015)
+      })
+    })
 
-  it('parses an ISO 8601 formatted date', function () {
-    actual = parseDate('2015-04-01', 'YYYY-MM-DD')
-    assert.deepEqual(actual, expected)
-  })
+    context('when succeeding date is Jan but date’s month is not Dec', function () {
+      it('returns the succeeding date’s year', function () {
+        assert.equal(transactionDate.calculateYear(new Date(2016, 0, 2)), 2016)
+      })
+    })
 
-  it('parses a date with a 2-digit year', function () {
-    actual = parseDate('15-04-01', 'YY-MM-DD')
-    assert.deepEqual(actual, expected)
-  })
+    context('when succeeding date is not Jan but date’s month is Dec', function () {
+      it('returns the succeeding date’s year', function () {
+        transactionDate.month = 11
+        assert.equal(transactionDate.calculateYear(new Date(2015, 8, 3)), 2015)
+      })
+    })
 
-  it('throws an exception when an invalid date format is given', function () {
-    assert.throws(function () {
-      actual = parseDate('1 April 2015', 'HELLO WORLD')
+    context('when succeeding date is Jan and date’s month is Dec', function () {
+      it('subtracts 1 from the succeeding date', function () {
+        transactionDate.month = 11
+        assert.equal(transactionDate.calculateYear(new Date(2015, 0, 2)), 2014)
+      })
     })
   })
 })

@@ -32,13 +32,13 @@ function Transactions (transactions, statement) {
 
 Transactions.prototype.chronological = function () {
   return dates.call(this).chronological()
-}
 
-function dates () {
-  var dates = this.map(function (transaction) {
-    return transaction.get('transactionDate')
-  })
-  return new TransactionDates(dates)
+  function dates () {
+    var dates = this.map(function (transaction) {
+      return transaction.get('transactionDate')
+    })
+    return new TransactionDates(dates)
+  }
 }
 
 /**
@@ -61,16 +61,16 @@ Transactions.prototype.last = function () {
  * @returns {Array} An array of formatted transaction attribute arrays
  */
 
-Transactions.prototype.toArray = function () {
-  return this.map(function (transaction) { return transaction.toArray() })
+Transactions.prototype.toArray = function (keys) {
+  return this.map(function (transaction) { return transaction.toArray(keys) })
 }
 
 /**
  * @returns {Array} An array of formatted transaction objects
  */
 
-Transactions.prototype.toJSON = function () {
-  return this.map(function (transaction) { return transaction.toJSON() })
+Transactions.prototype.toJSON = function (keys) {
+  return this.map(function (transaction) { return transaction.toJSON(keys) })
 }
 
 /**

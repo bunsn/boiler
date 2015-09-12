@@ -29,7 +29,12 @@ Transaction.prototype.transformers = {
   amount: makeNumber,
   balance: makeNumber,
   paidIn: makeAbsoluteNumber,
-  paidOut: makeAbsoluteNumber
+  paidOut: makeAbsoluteNumber,
+  date: function (date) {
+    // Convert to GMT to ensure correct JSON values
+    date.setHours(date.getHours() - date.getTimezoneOffset() / 60)
+    return date
+  }
 }
 
 /**
@@ -118,10 +123,10 @@ Transaction.prototype.setAmount = function () {
   var paidIn = this.get('paidIn')
   var paidOut = this.get('paidOut')
 
-  this.set('amount', amountFromAbsolutes(paidIn, paidOut))
+  this.set('amount', calculateAmount(paidIn, paidOut))
 }
 
-function amountFromAbsolutes (paidIn, paidOut) {
+function calculateAmount (paidIn, paidOut) {
   return paidIn ? paidIn : -paidOut
 }
 

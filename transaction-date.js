@@ -15,7 +15,7 @@ function TransactionDate (dateString, format, options) {
   this.date = parsed.date
 
   if (!this.year && options.succeedingDate) {
-    this.calculateYear(options.succeedingDate)
+    this.year = this.calculateYear(options.succeedingDate)
   }
 }
 
@@ -25,13 +25,7 @@ function TransactionDate (dateString, format, options) {
 
 TransactionDate.prototype.toDate = function () {
   if (!Date.parse(this.year, this.month, this.date)) return null
-
-  var date = new Date(this.year, this.month, this.date)
-
-  // Convert to GMT to ensure correct JSON values
-  date.setHours(date.getHours() - date.getTimezoneOffset() / 60)
-
-  return date
+  return new Date(this.year, this.month, this.date)
 }
 
 /**
@@ -45,7 +39,7 @@ TransactionDate.prototype.calculateYear = function (succeedingDate) {
   // Dec - Jan
   if (succeedingDate.getMonth() === 0 && this.month === 11) year--
 
-  this.year = year
+  return year
 }
 
 module.exports = TransactionDate

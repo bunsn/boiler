@@ -11,7 +11,9 @@ var Transactions = require('./transactions')
  */
 
 function Statement (attributes) {
-  for (var key in attributes) this[key] = result(attributes[key])
+  for (var key in attributes) {
+    if (attributes.hasOwnProperty(key)) this[key] = result(attributes[key])
+  }
 
   // Convert table to array of transactions
   var transactions = tableToArray(this.table, {
@@ -21,6 +23,11 @@ function Statement (attributes) {
   })
   this.transactions = new Transactions(transactions, this)
 }
+
+/**
+ * Creates a transaction from an object of attributes.
+ * @returns {Transaction}
+ */
 
 Statement.prototype.createTransaction = function (attributes) {
   attributes.dateString = attributes.date
