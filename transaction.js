@@ -31,6 +31,8 @@ Transaction.prototype.transformers = {
   paidIn: makeAbsoluteNumber,
   paidOut: makeAbsoluteNumber,
   date: function (date) {
+    if (!(date instanceof Date)) return date
+
     // Convert to GMT to ensure correct JSON values
     date.setHours(date.getHours() - date.getTimezoneOffset() / 60)
     return date
