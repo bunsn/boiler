@@ -92,46 +92,54 @@ To develop your own statement definition follow these steps:
 
    Note: this script does not store or send your transactions elsewhere. It is deliberately limited in functionality to discourage its use in production.
 
-## `Statement`
+## Installation
+
+```
+npm i @bunsn/boiler
+```
+
+```javascript
+var Statement = require('@bunsn/boiler/statement')
+var Transaction = require('@bunsn/boiler/transaction')
+```
+
+## API
+
+### `Statement`
 
 Takes in a statement definition and parses a table of transactions to set up its `transactions` property.
 
 ```javascript
-new Statement(definition)
+var statement = new Statement(definition)
+statement.transactions // an instance of Transactions
 ```
 
-Properties:
+See [transaction.js](transaction.js) for more documentation.
 
-- `transactions` - a `Transactions` instance
+### `Transactions`
 
-Methods:
-
-- `createTransaction(attributes)` - creates a transaction with the given attributes
-
-## `Transactions`
-
-Takes in an array of `Transaction` objects, and associated statement. It behaves like an array with a few convenient methods.
+Takes in an array of `Transaction` objects, and associated statement:
 
 ```javascript
-new Transactions(transactions, statement)
+var transactions = new Transactions([…], statement)
+transactions.first()
+transactions.last()
+transactions.toArray(['date', 'type', 'description', 'amount'])
+transactions.toJSON(['date', 'description', 'amount'])
 ```
 
-Methods:
+See [transactions.js](transactions.js) for more documentation.
 
-- `first()` - the first transaction
-- `last()` - the last transaction
-- `toArray()` - a two-dimensional array representation of the transactions
-- `toJSON()` - an array of attribute objects
-- `chronological()` - whether the transactions are listed chronologically
+### `Transaction`
 
-… plus any `Array.prototype` methods.
+Represents a transaction and is responsible for transforming and formatting raw values.
 
-## `Transaction`
+```javascript
+var transaction = new Transaction({…})
+transaction.getFormatted('date')
+```
 
-Methods:
-
-- `toArray()` - an array representation of the transaction’s basic attributes
-- `toJSON()` - a JavaScript object of the transaction’s basic attributes
+See [transaction.js](transaction.js) for more documentation.
 
 ## Limitations
 
