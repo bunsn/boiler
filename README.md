@@ -68,8 +68,6 @@ Here is the NatWest statement definition:
 
 ### Developing & Testing
 
-To develop your own statement definition follow these steps:
-
 1. Log in to your online banking site, and navigate to a page of transactions.
 2. Construct your statement definition in your text editor or in your browser’s developer tools console (see above for a list of statement definition properties).
 3. Add [the developer script](dist/boiler.min.js) to the page either by copy and pasting the script into the your browser’s developer tools console, or appending the script to the DOM (this might be useful if your bank uses frames and your get cross-origin frame errors). To add the script, run the following code in your browser’s developer tools console:
