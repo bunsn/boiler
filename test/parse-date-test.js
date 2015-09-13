@@ -38,6 +38,16 @@ describe('parseDate', function () {
     assert.deepEqual(actual, expected)
   })
 
+  it('parses a date in ALL CAPS', function () {
+    actual = parseDate('1 APR 2015', 'D MMM YYYY')
+    assert.deepEqual(actual, expected)
+  })
+
+  it('parses a date with no non-date-part characters', function () {
+    actual = parseDate('1Apr2015', 'DMMMYYYY')
+    assert.deepEqual(actual, expected)
+  })
+
   it('throws an exception when an invalid date format is given', function () {
     assert.throws(function () {
       actual = parseDate('1 April 2015', 'HELLO WORLD')
