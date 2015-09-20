@@ -1,6 +1,6 @@
 {
   "name": "@bunsn/boiler",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A tool which scrapes HTML tables on financial institutions' websites.",
   "main": "index.js",
   "scripts": {
@@ -30,11 +30,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "dependencies": {
-    "uglify-js": "^2.4.24",
-    "standard": "^5.2.1",
-    "watchify": "^3.2.3"
   },
   "repository": {
     "type": "git",
