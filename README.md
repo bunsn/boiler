@@ -60,9 +60,9 @@ The format used on transaction dates. Takes inspiration from the [year, month, a
 - **01/04/2015** has format `DD/MM/YYYY`
 - **2015-04-01** has format `YYYY-MM-DD`
 
-### `table` {Function|Node}
+### `rows` {Function|NodeList}
 
-A function with returns the DOM node of the target table. Alternatively you can pass in the table node itself.
+A function which returns a NodeList of `tr` elements, each representing an individual transaction.
 
 ### `date` {Function|Date} (optional)
 
@@ -78,8 +78,8 @@ Here is the NatWest statement definition:
   host: 'www.nwolb.com',
   columns: ['date', 'type', 'description', 'paidIn', 'paidOut', 'balance'],
   dateFormat: 'D MMM YYYY',
-  table: function () {
-    return window.frames.ctl00_secframe.contentDocument.querySelector('.ItemsTable')
+  rows: function () {
+    return window.frames.ctl00_secframe.contentDocument.querySelectorAll('.ItemsTable tbody tr')
   }
 }
 ```
