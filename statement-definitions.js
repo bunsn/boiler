@@ -12,8 +12,4 @@ statementDefinitions.findBy = function (key, value) {
   return null
 }
 
-statementDefinitions.findByHost = function (host) {
-  return this.findBy('host', host)
-}
-
 module.exports = statementDefinitions
