@@ -1,12 +1,30 @@
 # Boiler
 
-Boiler aims to simplify the task of scraping financial data from banking websites. It is currently experimental, prerelease software, to test if it’s possible to support many financial institutions through crowd-sourced statement definitions.
+Boiler aims to simplify the task of exporting financial data from banking websites. It is currently experimental, prerelease software, to test if it’s possible to support many financial institutions through crowd-sourced statement definitions.
 
-## The Idea
+## Installation
 
-Most financial institutions display tables of transactions on their online statements, but sometimes prevent their customers from easily exporting them. These tables vary only slightly from bank-to-bank, and so can be defined with a small set of variables.
+Boiler is an npm module, designed to be run a browser environment.
 
-Boiler consists of a few main components: **statement definitions**, **statements** and **transactions**. Statement definitions store the variables for each financial institution in a JavaScript object. They are designed to be relatively easy for developers to write, and therefore *crowd-sourceable*. A `Statement` can use a definition to parse a page of line items, and produce a well-formatted array of transactions, either as an array of JavaScript objects or as a two-dimensional array.
+```
+npm i @bunsn/boiler
+```
+
+## Example Usage
+
+```javascript
+var statementDefinitions = require('@bunsn/boiler/statement-definitions')
+var Statement = require('@bunsn/boiler/statement')
+
+// Find a statement definition
+var definition = statementDefinitions.findByHost(window.location.host)
+
+// Create a statement from the definition
+var statement = new Statement(definition)
+
+// Do something with the parsed data
+console.log(statement.transactions.toJSON(['date', 'description', 'amount']))
+```
 
 ## Statement Definitions
 
@@ -89,17 +107,6 @@ Here is the NatWest statement definition:
    If successful, you should see a brief summary of the statement’s transactions. Otherwise you’ll get an error. (At this early stage, the error message probably won’t be too helpful!)
 
    Note: this script does not store or send your transactions elsewhere. It is deliberately limited in functionality to discourage its use in production.
-
-## Installation
-
-```
-npm i @bunsn/boiler
-```
-
-```javascript
-var Statement = require('@bunsn/boiler/statement')
-var Transaction = require('@bunsn/boiler/transaction')
-```
 
 ## API
 
