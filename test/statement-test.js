@@ -13,20 +13,34 @@ var Statement = proxyquire('../statement', {
   './transaction': TransactionStub,
   './transactions': TransactionsStub
 })
+var table = document.createElement('table')
+table.innerHTML = [
+  '<tbody>',
+  '  <tr>',
+  '    <td>1 Apr 2015</td>',
+  '  </tr>',
+  '<tbody>'
+].join('\n')
 
-var definition = {
-  institution: 'My Bank',
-  table: document.createElement('table'),
-  columns: ['date'],
-  dateFormat: 'D MMM YYYY'
-}
+var definition
 var statement
-var attributes = {
-  date: '1 Apr 2015',
-  amount: '10'
-}
+var attributes
 
 describe('Statement', function () {
+  beforeEach(function () {
+    definition = {
+      institution: 'My Bank',
+      rows: table.querySelectorAll('tbody tr'),
+      columns: ['date'],
+      dateFormat: 'D MMM YYYY'
+    }
+
+    attributes = {
+      date: '1 Apr 2015',
+      amount: '10'
+    }
+  })
+
   afterEach(function () {
     TransactionStub.reset()
   })
@@ -39,13 +53,11 @@ describe('Statement', function () {
 
     it('calls createTransaction for each row', function () {
       var createTransactionStub = stub(Statement.prototype, 'createTransaction')
-      definition.table.innerHTML = '<tbody><tr><td>1 Apr 2015</td></tr></tbody>'
       statement = new Statement(definition)
 
       assert(createTransactionStub.called)
 
       Statement.prototype.createTransaction.restore()
-      definition.table = document.createElement('table')
     })
   })
 
@@ -59,6 +71,9 @@ describe('Statement', function () {
     })
 
     it('calls Transaction with dateString and dateFormat', function () {
+      // Ensure TransactionStub is reset after statement has been instantiated
+      TransactionStub.reset()
+
       var expected = {
         dateString: attributes.date,
         dateFormat: definition.dateFormat,
