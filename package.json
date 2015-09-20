@@ -4,7 +4,7 @@
   "description": "A tool which scrapes HTML tables on financial institutions' websites.",
   "main": "index.js",
   "scripts": {
-    "test": "standard ./*.js lib/*.js lib/**/*.js test/**/*.js index.js && mochify --plugin proxyquireify/plugin",
+    "test": "standard ./*.js lib/*.js lib/**/*.js statement-definitions/*.js test/**/*.js index.js && mochify --plugin proxyquireify/plugin",
     "build": "browserify -s __boiler__ -do dist/boiler.js index.js && uglifyjs -m -c -o dist/boiler.min.js dist/boiler.js"
   },
   "author": "Dom Christie",
