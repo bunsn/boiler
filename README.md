@@ -17,7 +17,7 @@ var statementDefinitions = require('@bunsn/boiler/statement-definitions')
 var Statement = require('@bunsn/boiler/statement')
 
 // Find a statement definition
-var definition = statementDefinitions.findByHost(window.location.host)
+var definition = statementDefinitions.findBy('host', window.location.host)
 
 // Create a statement from the definition
 var statement = new Statement(definition)
