@@ -4,8 +4,8 @@ var statementDefinitions = [
     host: 'www.saas.hsbc.co.uk',
     columns: ['date', 'type', 'description', 'paidOut', 'paidIn', 'balance'],
     dateFormat: 'DD MMM',
-    table: function () {
-      return document.querySelector('table[summary="This table contains a statement of your account"]')
+    rows: function () {
+      return document.querySelectorAll('table[summary="This table contains a statement of your account"] tbody tr')
     },
     date: function () {
       var selectors = [
@@ -27,8 +27,8 @@ var statementDefinitions = [
     host: 'www.nwolb.com',
     columns: ['date', 'type', 'description', 'paidIn', 'paidOut', 'balance'],
     dateFormat: 'D MMM YYYY',
-    table: function () {
-      return window.frames.ctl00_secframe.contentDocument.querySelector('.ItemTable')
+    rows: function () {
+      return window.frames.ctl00_secframe.contentDocument.querySelectorAll('.ItemTable tbody tr')
     }
   }
 ]
