@@ -1,5 +1,5 @@
 var result = require('./lib/result')
-var tableToArray = require('./lib/table-to-array')
+var Table = require('./lib/table')
 var weld = require('./lib/weld')
 var Transaction = require('./transaction')
 var Transactions = require('./transactions')
@@ -15,8 +15,8 @@ function Statement (attributes) {
     if (attributes.hasOwnProperty(key)) this[key] = result(attributes[key])
   }
 
-  // Convert table to array of transactions
-  var transactions = tableToArray(this.table, {
+  // Convert table rows to array of transactions
+  var transactions = Table.prototype.rowsToArray(this.rows, {
     processRow: function (row) {
       return this.createTransaction(weld(this.columns, row))
     }.bind(this)
