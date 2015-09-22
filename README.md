@@ -1,6 +1,8 @@
 # Boiler
 
-Boiler aims to simplify the task of exporting financial data from banking websites. It is currently experimental, prerelease software, to test if it’s possible to support many financial institutions through crowd-sourced statement definitions.
+Boiler aims to simplify the task of exporting financial data from banking websites. It is currently experimental/prerelease software, and is testing to see if it’s possible to support many financial institutions through crowd-sourced statement definitions.
+
+For a bookmarklet implementation, see [boiler-bookmarklet](https://github.com/bunsn/boiler-bookmarklet).
 
 ## Installation
 
