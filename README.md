@@ -30,7 +30,7 @@ console.log(statement.transactions.toJSON(['date', 'description', 'amount']))
 
 ## Statement Definitions
 
-A statement definition is a plain old JavaScript object and contains all the information needed to scrape a particular bank’s table of transactions. The following properties are supported:
+A statement definition is a JavaScript object literal which contains all the information needed to parse a particular bank’s table of transactions. The following properties are supported:
 
 ### `institution` {String}
 
