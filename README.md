@@ -159,3 +159,5 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (ISC).
 ***
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+The Bunsn logo is adapted from the [Fire Flame Match Icon](https://www.iconfinder.com/icons/289617/fire_flame_match_icon) by [Pixel Buddha](http://pixelbuddha.net), and is licensed under [Creative Commons (Attribution 3.0 Unported)](http://creativecommons.org/licenses/by/3.0/)
