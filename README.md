@@ -6,7 +6,7 @@ For a bookmarklet implementation, see [boiler-bookmarklet](https://github.com/bu
 
 ## Installation
 
-Boiler is an npm module, designed to be run a browser environment.
+Boiler is an npm module, designed to be run in a browser environment.
 
 ```
 npm i @bunsn/boiler
