@@ -129,7 +129,7 @@ Transaction.prototype.setAmount = function () {
 }
 
 function calculateAmount (paidIn, paidOut) {
-  return paidIn ? paidIn : -paidOut
+  return paidIn || -paidOut
 }
 
 function formatDate (value) {
