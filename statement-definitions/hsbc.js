@@ -1,6 +1,6 @@
 module.exports = {
   institution: 'HSBC',
-  host: 'www.saas.hsbc.co.uk',
+  host: 'www.hsbc.co.uk',
   columns: ['date', 'type', 'description', 'paidOut', 'paidIn', 'balance'],
   dateFormat: 'DD MMM',
   rows: function () {
