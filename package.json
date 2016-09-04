@@ -1,6 +1,6 @@
 {
   "name": "@bunsn/boiler",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A tool which scrapes HTML tables on financial institutions' websites.",
   "main": "index.js",
   "scripts": {
